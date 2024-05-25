@@ -1,0 +1,16 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// Añadir tus estilos globales aquí
+body {
+  @apply bg-gray-100 text-gray-900;
+}
+
+.pokemon-card {
+  @apply border-gray-300;
+}
+
+.team-card {
+  @apply border-gray-300;
+}
