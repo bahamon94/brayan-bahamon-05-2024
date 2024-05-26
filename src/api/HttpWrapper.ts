@@ -27,7 +27,6 @@ class HttpWrapper {
     return response;
   }
 
-  // Otros métodos (post, put, delete) pueden ser añadidos aquí...
 }
 
 export default HttpWrapper;

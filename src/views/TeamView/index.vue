@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { usePokemonStore } from '@/store/pokemonStore';
+import { usePokemonStore } from '../../composables/usePokemonStore';
 import { TeamCard } from '@/components';
 
 export default defineComponent({

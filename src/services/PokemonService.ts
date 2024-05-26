@@ -24,7 +24,7 @@ export const fetchPokemons = async (): Promise<PokemonDetail[]> => {
       response.results.map(async (pokemon) => {
         const pokemonId = getPokemonIdFromUrl(pokemon.url); 
         const detailResponse = await httpWrapper.get<RawPokemonDetail>(`${POKEMON_ENDPOINT}${pokemonId}`);
-        return pokemonDetailAdapter(detailResponse);
+        return pokemonDetailAdapter({...detailResponse, pokemonId});
       })
     );
 
