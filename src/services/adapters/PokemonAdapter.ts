@@ -12,6 +12,8 @@ export const pokemonDetailAdapter = (data: RawPokemonDetail): PokemonDetail => {
       stats,
       types,
       cries,
+      height,
+      weight,
     } = detail;
 
     const image = sprites?.other?.dream_world?.front_default || '';
@@ -23,6 +25,8 @@ export const pokemonDetailAdapter = (data: RawPokemonDetail): PokemonDetail => {
       stats,
       types,
       cries,
+      height,
+      weight,
     };
   });
     

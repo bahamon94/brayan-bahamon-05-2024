@@ -34,6 +34,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 import { BaseCard } from '@/components/Base';
 import { Pokemon } from '@/types';
 
@@ -58,6 +60,7 @@ export default defineComponent({
     const isAddingToTeam = ref(false);
     const isRemovingFromTeam = ref(false); 
     const isActionInProgress = ref(false);
+    const router = useRouter();
 
     const addToTeam = async () => {
       isActionInProgress.value = true;
@@ -95,8 +98,12 @@ export default defineComponent({
       }
     };
 
-    const onSelect = () => {
+    const onSelect = () => {      
+      if (props.hasRemoved) {
+        router.push(`/team/${props.pokemon.id}`);
+      }
     };
+;
 
     return {
       isAddingToTeam,
