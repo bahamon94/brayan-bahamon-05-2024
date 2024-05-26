@@ -1,5 +1,13 @@
 <template>
-  <BaseCard @click="onSelect" tabindex="0" @keydown.enter="onSelect" role="button" aria-pressed="false" class="pokemon-card">
+  <BaseCard 
+    @click="onSelect" 
+    tabindex="0" 
+    @keydown.enter="onSelect" 
+    role="button" 
+    aria-pressed="false" 
+    class="pokemon-card"
+    :style="{ pointerEvents: isActionInProgress ? 'none' : 'auto' }"
+  >
     <div class="card-header">
       <img
         :src="pokemon.image"
@@ -9,11 +17,17 @@
     </div>
     <div class="card-body">
       <h3 class="pokemon-name">{{ pokemon.name }}</h3>
-      <button v-if="!isInTeam" class="add-to-team-button" @click="addToTeam" :disabled="isAddingToTeam" aria-label="Add to Team">
-        <span class="heart-icon">❤️</span>
-        <span class="plus-icon">{{ isAddingToTeam ? 'Adding...' : 'Add to Team' }}</span> 
+      <template v-if="!hasRemoved">
+        <button v-if="!isInTeam" class="add-to-team-button" @click="addToTeam" :disabled="isAddingToTeam" aria-label="Add to Team">
+          <span class="heart-icon">❤️</span>
+          <span class="plus-icon">{{ isAddingToTeam ? 'Adding...' : 'Add to Team' }}</span> 
+        </button>
+        <span v-else class="already-in-team">Already in Team</span>
+      </template>
+      <button v-if="hasRemoved" class="remove-from-team-button" @click="removeFromTeam" :disabled="isRemovingFromTeam" aria-label="Remove from Team">
+        <span class="remove-icon">❌</span>
+        <span class="remove-text">{{ isRemovingFromTeam ? 'Removing...' : 'Remove from Team' }}</span> 
       </button>
-      <span v-else class="already-in-team">Already in Team</span>
     </div>
   </BaseCard>
 </template>
@@ -31,15 +45,22 @@ export default defineComponent({
       type: Object as PropType<Pokemon>,
       required: true,
     },
+    hasRemoved: {
+      type: Boolean,
+      default: false,
+    },
     isInTeam: {
       type: Boolean,
       default: false,
     },
   },
   setup(props, { emit }) {
-    const isAddingToTeam = ref(false); 
+    const isAddingToTeam = ref(false);
+    const isRemovingFromTeam = ref(false); 
+    const isActionInProgress = ref(false);
 
     const addToTeam = async () => {
+      isActionInProgress.value = true;
       isAddingToTeam.value = true; 
 
       try {
@@ -51,6 +72,26 @@ export default defineComponent({
       } catch (error) {
         console.error('Error al agregar al equipo:', error);
         isAddingToTeam.value = false; 
+      } finally {
+        isActionInProgress.value = false;
+      }
+    };
+
+    const removeFromTeam = async () => {
+      isActionInProgress.value = true;
+      isRemovingFromTeam.value = true; 
+
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        isRemovingFromTeam.value = false;
+
+        emit('remove-from-team', props.pokemon);
+      } catch (error) {
+        console.error('Error al remover del equipo:', error);
+        isRemovingFromTeam.value = false; 
+      } finally {
+        isActionInProgress.value = false;
       }
     };
 
@@ -60,7 +101,10 @@ export default defineComponent({
     return {
       isAddingToTeam,
       addToTeam,
+      isRemovingFromTeam,
+      removeFromTeam,
       onSelect,
+      isActionInProgress,
     };
   },
 });
@@ -97,22 +141,33 @@ export default defineComponent({
     @apply mt-2 text-center text-xl font-bold text-gray-900;
   }
 
-  .add-to-team-button {
-    @apply mt-4 flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-    cursor: pointer;
+  .add-to-team-button,
+  .remove-from-team-button {
+    @apply mt-4 flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md cursor-pointer;
     transition: background-color 0.3s ease;
   }
 
   .add-to-team-button:hover {
     background-color: #4f46e5;
+    color: white;
+  }
+
+  .remove-from-team-button:hover {
+    background-color: #dc2626;
+    color: white;
   }
 
   .heart-icon {
     @apply mr-1;
   }
 
-  .plus-icon {
+  .plus-icon,
+  .remove-icon {
     @apply ml-1;
+  }
+
+  .already-in-team {
+    @apply mt-2 text-red-600 font-semibold;
   }
 }
 </style>

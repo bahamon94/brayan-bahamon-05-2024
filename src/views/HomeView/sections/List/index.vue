@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue';
 import { useStore } from '../../../../store/pinia';
 import { usePokemonStore } from '../../../../composables/usePokemonStore';
-import { PokemonCard } from '@/components/PokemonCard';
+import { PokemonCard } from '@/components';
 import { Pokemon } from '@/types';
 
 export default defineComponent({
