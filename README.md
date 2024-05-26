@@ -1,9 +1,24 @@
-# Vue 3 + TypeScript + Vite
+# Pokémon App
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+La Pokémon App es una aplicación web que te permite explorar diferentes Pokémon, crear tu equipo Pokémon personalizado y ver los detalles de cada Pokémon en tu equipo.
 
-## Recommended Setup
+## Funcionalidades
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+- Explorar una lista de Pokémon.
+- Agregar Pokémon a tu equipo.
+- Ver los detalles de cada Pokémon en tu equipo, como habilidades y estadísticas.
+- Redirigir a la página de inicio si el equipo está vacío o si se intenta acceder a un Pokémon que no está en el equipo.
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+## Tecnologías utilizadas
+
+- Vue.js: Framework de JavaScript para construir interfaces de usuario.
+- Vue Router: Enrutador oficial para Vue.js.
+- Pinia: Administrador de estado para Vue.js.
+- PokéAPI: API utilizada para obtener datos sobre Pokémon.
+
+## Cómo iniciar el proyecto
+
+1. Clona este repositorio en tu máquina local:
+
+```bash
+git clone https://github.com/bahamon94/brayan-bahamon-05-2024>
