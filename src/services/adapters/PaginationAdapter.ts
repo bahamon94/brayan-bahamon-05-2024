@@ -22,8 +22,6 @@ const extractParams = (url: string | null): PaginationParams | null => {
 };
 
 export const paginationAdapter = (data: { next: string | null; previous: string | null }): PaginationData => {
-  console.log('da->', data);
-  
   return {
     next: extractParams(data.next),
     previous: extractParams(data.previous),

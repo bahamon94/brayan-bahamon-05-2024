@@ -45,13 +45,17 @@ export default {
 }
 
 .app-header {
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #ffcb05; /* Color principal */
-  color: #333; /* Color de texto principal */
-  border-bottom: 2px solid #333; /* Borde inferior */
+  background-color: #ffcb05;
+  color: #333; 
+  border-bottom: 2px solid #333; 
+  z-index: 1000; 
 }
 
 .logo {
@@ -72,6 +76,7 @@ export default {
 
 .nav-menu {
   display: flex;
+  padding: 0 1rem;
 }
 
 .menu-item {
@@ -80,14 +85,14 @@ export default {
   margin-left: 1rem;
   padding: 0.5rem 1rem;
   text-decoration: none;
-  color: #333; /* Color de texto principal */
+  color: #333;
   font-weight: bold;
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Color de fondo al pasar el ratón */
+  background-color: rgba(255, 255, 255, 0.2); 
 }
 
 .menu-item-icon {
@@ -98,6 +103,6 @@ export default {
 
 .app-main {
   flex: 1;
-  padding: 1rem;
+  padding-top: 80px; 
 }
 </style>

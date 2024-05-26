@@ -33,7 +33,7 @@ export default defineComponent({
   setup() {
     const { pokemons, pagination, getPokemons } = usePokemonStore();    
     const store = useStore();
-    const isLoading = ref(true); // Estado de carga
+    const isLoading = ref(true); 
 
     const addToTeam = (pokemon: Pokemon) => {
       store.addToTeam(pokemon);
@@ -44,16 +44,15 @@ export default defineComponent({
     };
 
     const onPageChanged = async (params: PaginationParams) => {
-      isLoading.value = true; // Mostrar el spinner de carga
+      isLoading.value = true; 
       const filters = {
         offset: params.offset?.toString() || '0',
         limit: params.limit?.toString() || '25',
       };
       await getPokemons(filters);
-      isLoading.value = false; // Ocultar el spinner de carga
+      isLoading.value = false; 
     };
 
-    // Cargar la primera página al montar el componente
     onPageChanged({ offset: '0', limit: '25' });
 
     return {
@@ -71,7 +70,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .pokemon-list-container {
   position: relative;
-  min-height: 400px; // Asegurar que el contenedor tenga una altura mínima para la visualización del spinner
+  min-height: 400px;
 }
 
 .pokemon-list {

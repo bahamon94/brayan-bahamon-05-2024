@@ -64,7 +64,7 @@ export default defineComponent({
 }
 
 .card-header {
-  background-color: #4caf50;
+  background-color: #ffcb05;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   color: #fff;
