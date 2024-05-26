@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { PokemonList } from './sections/List';
+import { PokemonList } from './sections';
 </script>
 
 <style scoped lang="scss">

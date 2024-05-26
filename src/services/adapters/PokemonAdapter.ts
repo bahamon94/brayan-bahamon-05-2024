@@ -1,23 +1,37 @@
-import { PokemonDetail, RawPokemonDetail } from '../../types';
+import { PokemonDetail, RawPokemonDetail, IPokemonsRaw } from '../../types';
+import { paginationAdapter } from "./PaginationAdapter";
 
 export const pokemonDetailAdapter = (data: RawPokemonDetail): PokemonDetail => {
-  const { 
-    name, 
-    sprites, 
-    pokemonId,
-    stats,
-    types,
-    cries,
-  } = data;
+  const { pokemons, previous, next } = data;
+  
+  const results = pokemons.map((detail: IPokemonsRaw) => {
+    const { 
+      name, 
+      sprites, 
+      id,
+      stats,
+      types,
+      cries,
+      height,
+      weight,
+    } = detail;
 
-  const image = sprites?.other?.dream_world?.front_default || '';
+    const image = sprites?.other?.dream_world?.front_default || '';
 
+    return {
+      id,
+      name,
+      image,
+      stats,
+      types,
+      cries,
+      height,
+      weight,
+    };
+  });
+    
   return {
-    id: pokemonId,
-    name,
-    image,
-    stats,
-    types,
-    cries,
+    results,
+    pagination: paginationAdapter({ next, previous }),
   };
 };

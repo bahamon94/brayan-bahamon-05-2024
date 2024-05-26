@@ -12,13 +12,16 @@ export const useStore = defineStore({
   }),
   getters: {
     getTeam: (state) => state.team,
+    getPokemonById: (state) => (id: string): Pokemon | undefined => {
+      return state.team.find((pokemon) => pokemon.id === parseInt(id));
+    },
   },
   actions: {
     addToTeam(pokemon: Pokemon) {
       this.team.push(pokemon);
     },
     removeFromTeam(id: string) {
-      this.team = this.team.filter((pokemon) => pokemon.id !== id);
+      this.team = this.team.filter((pokemon) => pokemon.id !== parseInt(id));
     },
   },
 });

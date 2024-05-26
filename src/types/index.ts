@@ -1,16 +1,15 @@
 export interface Pokemon {
-  id: string;
-  name: string;
-  url: string;
-}
-
-export interface PokemonDetail {
-  id: string;
+  id: number;
   name: string;
   image: string;
   stats: Stat[];
   types: Type[];
   cries: Cries;
+}
+
+export interface PokemonDetail {
+  results: Pokemon[];
+  pagination: PaginationData;
 }
 
 export interface Sprites {
@@ -39,11 +38,26 @@ export interface Cries {
   legacy: string;
 }
 
-export interface RawPokemonDetail {
-  pokemonId: string;
+export interface IPokemonsRaw {
+  id: number;
   name: string;
   sprites: Sprites;
   stats: Stat[];
   types: Type[];
   cries: Cries;
+}
+export interface RawPokemonDetail {
+  next: string,
+  previous: string,
+  pokemons: IPokemonsRaw[]
+}
+
+export interface PaginationParams {
+  offset: string | null;
+  limit: string | null;
+}
+
+export interface PaginationData {
+  next: PaginationParams | null;
+  previous: PaginationParams | null;
 }

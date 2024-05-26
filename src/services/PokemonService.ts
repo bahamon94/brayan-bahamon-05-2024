@@ -6,8 +6,10 @@ import { pokemonDetailAdapter } from './adapters/PokemonAdapter';
 
 const httpWrapper = new HttpWrapper('https://pokeapi.co/api/v2');
 
-interface PokemonResponse {
-  results: Pokemon[];
+interface IPokemonResponseAll {
+  next: string,
+  previous: string
+  results: { name: string, url: string }[];
 }
 
 const getPokemonIdFromUrl = (url: string): string => {
@@ -16,21 +18,26 @@ const getPokemonIdFromUrl = (url: string): string => {
 };
 
 
-export const fetchPokemons = async (): Promise<PokemonDetail[]> => {
+export const fetchPokemons = async (filters: Record<string, string> = {}): Promise<PokemonDetail> => {
+  const params = new URLSearchParams(filters).toString();
+  const endpoint = `${POKEMON_ENDPOINT}?${params}`
+  
   try {
-    const response = await httpWrapper.get<PokemonResponse>('/pokemon?limit=25&offset=0');
-    
-    const pokemonDetails: PokemonDetail[] = await Promise.all(
+    const response = await httpWrapper.get<IPokemonResponseAll>(endpoint);
+    const pokemonDetailsRaw: RawPokemonDetail[] = await Promise.all(
       response.results.map(async (pokemon) => {
-        const pokemonId = getPokemonIdFromUrl(pokemon.url); 
-        const detailResponse = await httpWrapper.get<RawPokemonDetail>(`${POKEMON_ENDPOINT}${pokemonId}`);
-        return pokemonDetailAdapter({...detailResponse, pokemonId});
+        const pokemonId: string = getPokemonIdFromUrl(pokemon.url); 
+        return await httpWrapper.get<RawPokemonDetail>(`${POKEMON_ENDPOINT}${pokemonId}`);
       })
-    );
+    );   
 
-    return pokemonDetails;
+    const { next, previous } = response;
+
+    return pokemonDetailAdapter({ pokemons: pokemonDetailsRaw, next, previous });
+
   } catch (error) {
     console.error('Error al obtener los pokémons:', error);
     throw error;
   }
 };
+

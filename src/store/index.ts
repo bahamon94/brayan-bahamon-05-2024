@@ -1,12 +1,10 @@
 import { provide, inject, reactive } from 'vue';
 import { Pokemon } from '../types';
 
-// Definir el tipo de estado
 interface State {
   team: Pokemon[];
 }
 
-// Crear el contexto
 const StoreSymbol = Symbol('store');
 
 export const createStore = () => {
@@ -14,7 +12,6 @@ export const createStore = () => {
     team: [],
   });
 
-  // Métodos para modificar el estado
   const addToTeam = (pokemon: Pokemon) => {
     state.team.push(pokemon);
   };
@@ -23,7 +20,6 @@ export const createStore = () => {
     state.team = state.team.filter(pokemon => pokemon.id !== id);
   };
 
-  // Devolver el estado y los métodos
   return {
     state,
     addToTeam,
@@ -31,12 +27,10 @@ export const createStore = () => {
   };
 };
 
-// Proveedor de contexto
 export const provideStore = () => {
   provide(StoreSymbol, createStore());
 };
 
-// Gancho personalizado para acceder al contexto
 export const useStore = () => {
   const store = inject<State>(StoreSymbol);
   if (!store) {

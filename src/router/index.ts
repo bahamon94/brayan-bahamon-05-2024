@@ -6,7 +6,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: () => import(/* webpackChunkName: "home" */ '../views/HomeView/index.vue')
   },
-  // Otras rutas aquí...
+  {
+    path: '/team',
+    name: 'Team',
+    component: () => import(/* webpackChunkName: "team" */ '../views/TeamView/index.vue')
+  },
+  {
+    path: '/team/:id',
+    name: 'PokemonDetails',
+    component: () => import(/* webpackChunkName: "pokemon-details" */ '../views/TeamView/detail/_id.vue')
+  }
 ];
 
 const router = createRouter({
