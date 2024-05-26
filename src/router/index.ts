@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { useStore } from '../store/pinia';
+import PokemonDetail from '../views/TeamView/detail/_id.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,9 +15,20 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/team/:id',
-    name: 'PokemonDetails',
-    component: () => import(/* webpackChunkName: "pokemon-details" */ '../views/TeamView/detail/_id.vue')
-  }
+    name: 'PokemonDetail',
+    component: PokemonDetail,
+    beforeEnter: (to, from, next) => {
+      const pokemonId = parseInt(to.params.id);
+      
+      const store = useStore();
+      
+      if (store.getTeam.length === 0) {
+        router.push('/');
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = createRouter({
